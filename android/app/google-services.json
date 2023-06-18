@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "742415027647",
+    "project_id": "hive-5eb83",
+    "storage_bucket": "hive-5eb83.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:742415027647:android:5470cd3c6414ada35d250a",
+        "android_client_info": {
+          "package_name": "com.example.hive_customer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "742415027647-0af3mupn31cksr5aj8dfl1j3u50m7o0k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdweH_cPTdEZkl6bbaJiClBrYyZ9xKQ_U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "742415027647-0af3mupn31cksr5aj8dfl1j3u50m7o0k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
