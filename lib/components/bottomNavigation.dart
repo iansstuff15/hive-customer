@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:hive_customer/components/navigationButton.dart';
 import 'package:hive_customer/screens/home.dart';
 import 'package:hive_customer/screens/profile.dart';
-import 'package:hive_customer/screens/services.dart';
+
 import 'package:hive_customer/screens/transactions.dart';
 import 'package:hive_customer/statemanagement/businessInfo/businessInfoController.dart';
 import 'package:hive_customer/utilities/colors.dart';
@@ -39,14 +39,6 @@ class AppBottomNavigation extends StatelessWidget {
                       color: AppColors.textColor,
                     ),
                     () => Get.offNamed(Home.id)),
-                NavigationButton(
-                    'Services',
-                    Icon(
-                      Icons.list,
-                      size: AppSizes.medium,
-                      color: AppColors.textColor,
-                    ),
-                    () => Get.offNamed(Services.id)),
                 NavigationButton(
                     'Transactions',
                     Icon(

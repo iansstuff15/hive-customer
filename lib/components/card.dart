@@ -2,7 +2,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive_customer/data%20models/status.dart';
+
 import 'package:hive_customer/helper/firebase.dart';
 import 'package:hive_customer/statemanagement/statusInfo/statusInfoController.dart';
 import 'package:hive_customer/utilities/biometrics.dart';
@@ -119,21 +119,13 @@ class _AppCardState extends State<AppCard> {
                           FirebaseAuth.instance
                               .authStateChanges()
                               .listen((User? user) {
-                            if (user != null) {
-                              Status status =
-                                  Status(status: false, uid: user.uid);
-                              FirebaseManager().setStatus(user.uid, status);
-                            }
+                            if (user != null) {}
                           });
                         } else {
                           FirebaseAuth.instance
                               .authStateChanges()
                               .listen((User? user) {
-                            if (user != null) {
-                              Status status =
-                                  Status(status: true, uid: user.uid);
-                              FirebaseManager().setStatus(user.uid, status);
-                            }
+                            if (user != null) {}
                           });
                         }
                       },

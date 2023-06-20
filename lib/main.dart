@@ -9,7 +9,7 @@ import 'package:hive_customer/screens/home.dart';
 import 'package:hive_customer/screens/login.dart';
 import 'package:hive_customer/screens/profile.dart';
 import 'package:hive_customer/screens/register.dart';
-import 'package:hive_customer/screens/services.dart';
+
 import 'package:hive_customer/screens/register.dart';
 import 'package:hive_customer/screens/transactionPage.dart';
 import 'package:hive_customer/screens/transactions.dart';
@@ -46,7 +46,6 @@ class MyApp extends StatelessWidget {
         Home.id: (context) => Home(),
         Profile.id: (context) => Profile(),
         AppPages.id: (context) => AppPages(),
-        Services.id: (context) => Services(),
         Transactions.id: (context) => Transactions(),
         TransactionPage.id: (context) => TransactionPage(),
         UpdatePage.id: (context) => UpdatePage(),

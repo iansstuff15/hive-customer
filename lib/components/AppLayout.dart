@@ -7,7 +7,7 @@ import 'package:hive_customer/components/AppButton.dart';
 import 'package:hive_customer/components/AppInput.dart';
 import 'package:hive_customer/components/addService.dart';
 import 'package:hive_customer/components/bottomNavigation.dart';
-import 'package:hive_customer/data%20models/offers.dart';
+
 import 'package:hive_customer/helper/firebase.dart';
 import 'package:hive_customer/statemanagement/user/userController.dart';
 import 'package:hive_customer/utilities/colors.dart';
@@ -24,7 +24,7 @@ class AppLayout extends StatefulWidget {
 
 class _AppLayoutState extends State<AppLayout> {
   UserStateController _userStateController = Get.find<UserStateController>();
-  List<Offers> offersList = [];
+
   TextEditingController productName = TextEditingController();
   TextEditingController productDescription = TextEditingController();
   TextEditingController productPrice = TextEditingController();
@@ -98,16 +98,8 @@ class _AppLayoutState extends State<AppLayout> {
                     AppButton(
                       "Add Item",
                       () {
-                        setState(() {
-                          offersList!.add(Offers(
-                              productName.text,
-                              productDescription.text,
-                              double.parse(productPrice.text)));
-                        });
-                        FirebaseManager().publishProduct(
-                            _userStateController.user.uid.value,
-                            Offers(productName.text, productDescription.text,
-                                double.parse(productPrice.text)));
+                        setState(() {});
+
                         Get.back();
                       },
                       width: double.infinity,

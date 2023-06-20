@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:hive_customer/data%20models/offers.dart';
+
 import 'package:hive_customer/utilities/colors.dart';
 import 'package:hive_customer/utilities/sizes.dart';
 
 class OfferListItem extends StatefulWidget {
-  Offers? offerInfo;
   void Function(BuildContext)? ondelete;
   void Function(BuildContext)? onEdit;
-  OfferListItem(this.offerInfo, {this.onEdit, this.ondelete});
 
   @override
   State<OfferListItem> createState() => _OfferListItemState();
@@ -72,20 +70,7 @@ class _OfferListItemState extends State<OfferListItem> {
           margin: EdgeInsets.only(bottom: AppSizes.tweenSmall),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                widget.offerInfo!.name!,
-                style: TextStyle(
-                    color: AppColors.primary,
-                    fontSize: AppSizes.mediumSmall,
-                    fontWeight: FontWeight.bold),
-              ),
-              Text(widget.offerInfo!.description!),
-              SizedBox(
-                height: AppSizes.extraSmall,
-              ),
-              Text('₱ ${widget.offerInfo!.price!.toString()}'),
-            ],
+            children: [],
           )),
     );
   }

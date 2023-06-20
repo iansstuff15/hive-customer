@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:hive_customer/data%20models/storeInfo.dart';
+import 'package:hive_customer/data%20models/user.dart';
 
 class BusinessInfoModel {
   var businessName = ''.obs;

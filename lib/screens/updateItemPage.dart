@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:hive_customer/components/AppButton.dart';
 import 'package:hive_customer/components/AppInput.dart';
 import 'package:hive_customer/helper/firebase.dart';
-import 'package:hive_customer/screens/services.dart';
+
 import 'package:hive_customer/statemanagement/user/userController.dart';
 import 'package:hive_customer/utilities/colors.dart';
 import 'package:hive_customer/utilities/sizes.dart';
@@ -166,7 +166,6 @@ class UpdatePage extends StatelessWidget {
                 await docref.update({"price": priceController.text});
                 log('done if');
               }
-              Get.toNamed(Services.id);
             },
             width: AppSizes.getWitdth(context) * 0.9,
           ),

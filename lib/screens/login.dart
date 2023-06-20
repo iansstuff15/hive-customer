@@ -128,10 +128,7 @@ class Login extends StatelessWidget {
                                       : response))
                               .show(context);
                           bl.close();
-                          if (response == 'success') {
-                            await FirebaseManager().getStoreInfo(
-                                _userStateController.user.uid.toString());
-                          }
+                          if (response == 'success') {}
                         },
                         width: double.infinity,
                         height: AppSizes.mediumLarge,
