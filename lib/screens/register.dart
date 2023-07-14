@@ -20,6 +20,7 @@ import 'package:hive_customer/data%20models/user.dart';
 import 'package:hive_customer/helper/firebase.dart';
 import 'package:hive_customer/screens/appPages.dart';
 import 'package:hive_customer/screens/home.dart';
+import 'package:hive_customer/screens/login.dart';
 import 'package:hive_customer/utilities/colors.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 import '../statemanagement/user/userController.dart';
@@ -92,12 +93,14 @@ class _RegisterState extends State<Register> {
                                     firstName: firstName.text,
                                     lastName: lastName.text,
                                     phone: phone.text,
+                                    email: email.text,
                                     imageUrl: '///'),
                                 password.text,
                                 _profilePicFile!,
                               );
                               bl.close();
-                              Get.toNamed(Home.id);
+
+                              Get.toNamed(Login.id);
                             }
                           },
                           width: double.infinity,

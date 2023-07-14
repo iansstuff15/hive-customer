@@ -128,7 +128,9 @@ class Login extends StatelessWidget {
                                       : response))
                               .show(context);
                           bl.close();
-                          if (response == 'success') {}
+                          if (response == 'success') {
+                            Get.toNamed(Home.id);
+                          }
                         },
                         width: double.infinity,
                         height: AppSizes.mediumLarge,

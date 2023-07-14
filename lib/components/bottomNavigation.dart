@@ -19,7 +19,7 @@ class AppBottomNavigation extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomAppBar(
       elevation: 0,
-      color: AppColors.container,
+      color: Colors.white,
       height: AppSizes.getHeight(context) * 0.09,
       padding: EdgeInsets.symmetric(horizontal: AppSizes.extraSmall),
       notchMargin: AppSizes.extraSmall,
@@ -42,17 +42,25 @@ class AppBottomNavigation extends StatelessWidget {
                 NavigationButton(
                     'Transactions',
                     Icon(
-                      Icons.history,
+                      Icons.explore_outlined,
                       size: AppSizes.medium,
                       color: AppColors.textColor,
+                    ),
+                    () => Get.offNamed(Transactions.id)),
+                NavigationButton(
+                    'Transactions',
+                    SvgPicture.asset(
+                      'assets/transactions.svg',
+                      width: AppSizes.medium,
+                      height: AppSizes.medium,
                     ),
                     () => Get.offNamed(Transactions.id)),
                 NavigationButton(
                     'Profile',
                     ClipRRect(
                       child: Image(
-                        image: NetworkImage(_businessInfoController
-                            .businessInfo.profilePicFile.value),
+                        image: NetworkImage(
+                            'https://firebasestorage.googleapis.com/v0/b/hive-5eb83.appspot.com/o/images%2FDprdgoYHpYhT1IwQX65eaFrxIlA2%2Fprofile?alt=media&token=68884301-383f-4203-8d98-4642a6ec9ed4'),
                         width: AppSizes.medium,
                         height: AppSizes.medium,
                         fit: BoxFit.cover,

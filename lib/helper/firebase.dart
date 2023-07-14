@@ -31,6 +31,12 @@ class FirebaseManager {
   final db = FirebaseFirestore.instance;
   Future<String> registerUser(
       Customer user, String? password, File image) async {
+    log(user.email.toString());
+    log(user.firstName.toString());
+    log(user.lastName.toString());
+    log(user.phone.toString());
+    log(user.email.toString());
+    log(password.toString());
     if (EmailValidator.validate(user.email!)) {
       if (password != null) {
         try {
@@ -97,7 +103,9 @@ class FirebaseManager {
   }
 
   Future<String> login(String? email, String? password) async {
-    log(password!);
+    log(password.toString());
+    log(email.toString());
+    log('${password != null}');
     if (EmailValidator.validate(email!)) {
       if (password != null) {
         try {
@@ -118,9 +126,9 @@ class FirebaseManager {
           } else if (e.code == 'wrong-password') {
             return ('Wrong password provided for that user.');
           }
+          return e.code.toString();
         }
       }
-      return 'Enter a password';
     }
 
     return 'Enter a proper email';
