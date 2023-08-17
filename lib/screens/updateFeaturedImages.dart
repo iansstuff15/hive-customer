@@ -68,15 +68,15 @@ class UpdateFeaturedImagePage extends StatelessWidget {
                 size: AppSizes.medium,
               ),
             ),
-            Align(
-              child: Text(
-                'Update Featured Image',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: AppSizes.medium),
-              ),
-              alignment: Alignment.center,
-            ),
+            // Align(
+            //   child: Text(
+            //     'Update Featured Image',
+            //     textAlign: TextAlign.center,
+            //     style: TextStyle(
+            //         fontWeight: FontWeight.bold, fontSize: AppSizes.medium),
+            //   ),
+            //   alignment: Alignment.center,
+            // ),
             Container(
               decoration: BoxDecoration(
                   color: AppColors.primary,

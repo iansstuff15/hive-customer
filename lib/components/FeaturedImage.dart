@@ -26,30 +26,30 @@ class _FeaturedImageState extends State<FeaturedImage> {
         padding: EdgeInsets.symmetric(horizontal: AppSizes.small),
         child: Column(
           children: [
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Text(
-                "Featured Images",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.primary,
-                    fontSize: AppSizes.mediumSmall),
-              ),
-              AppTextButton("Edit", () {
-                Get.toNamed(UpdateFeaturedImagePage.id);
-              }),
-            ]),
-            GestureDetector(
-                onTap: () {
-                  Get.toNamed(UpdateFeaturedImagePage.id);
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: AppColors.textBox,
-                      borderRadius: BorderRadius.circular(AppSizes.small)),
-                  width: double.infinity,
-                  height: AppSizes.large,
-                  child: Icon(Icons.add),
-                ))
+            // Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            //   Text(
+            //     "Featured Images",
+            //     style: TextStyle(
+            //         fontWeight: FontWeight.bold,
+            //         color: AppColors.primary,
+            //         fontSize: AppSizes.mediumSmall),
+            //   ),
+            //   AppTextButton("Edit", () {
+            //     Get.toNamed(UpdateFeaturedImagePage.id);
+            //   }),
+            // ]),
+            // GestureDetector(
+            //     onTap: () {
+            //       Get.toNamed(UpdateFeaturedImagePage.id);
+            //     },
+            //     child: Container(
+            //       decoration: BoxDecoration(
+            //           color: AppColors.textBox,
+            //           borderRadius: BorderRadius.circular(AppSizes.small)),
+            //       width: double.infinity,
+            //       height: AppSizes.large,
+            //       child: Icon(Icons.add),
+            //     ))
             // NewsfeedMultipleImageView(
             //   imageUrls: _imageUrls,
             //   marginLeft: 10.0,

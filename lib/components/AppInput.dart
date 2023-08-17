@@ -12,12 +12,13 @@ class AppInput extends StatefulWidget {
   int? maxLines;
   double? height;
   double? width;
-
+  bool? focus;
   AppInput(this.placeholder, this.keyboard, this.controller,
       {this.obsure = false,
       this.maxLines = 1,
       this.height = 50,
-      this.width = double.infinity});
+      this.width = double.infinity,
+      this.focus = false});
   @override
   State<AppInput> createState() => _AppInputState();
 }
@@ -39,6 +40,11 @@ class _AppInputState extends State<AppInput> {
           TextField(
             maxLines: widget.maxLines,
             controller: widget.controller,
+            autofocus: widget.focus!,
+            onChanged: (value) {
+              setState(
+                  () {}); // This will trigger a rebuild to see live changes
+            },
             decoration: InputDecoration(
                 labelText: widget.placeholder,
                 focusedBorder: InputBorder.none,

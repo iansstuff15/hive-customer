@@ -1,10 +1,15 @@
+import 'dart:developer';
+
 import 'package:chips_choice/chips_choice.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:get/get.dart';
 import 'package:hive_customer/components/AppInput.dart';
 import 'package:hive_customer/components/AppLayout.dart';
 import 'package:hive_customer/components/transactionListItem.dart';
+import 'package:hive_customer/statemanagement/user/userController.dart';
 import 'package:hive_customer/utilities/colors.dart';
 import 'package:hive_customer/utilities/sizes.dart';
 
@@ -17,7 +22,7 @@ class Transactions extends StatefulWidget {
 
 class _TransactionsState extends State<Transactions> {
   List<String> tags = [];
-
+  UserStateController userInfo = Get.find<UserStateController>();
   TextEditingController searchText = TextEditingController();
 
   List<String> options = [
@@ -29,99 +34,110 @@ class _TransactionsState extends State<Transactions> {
   @override
   Widget build(BuildContext context) {
     return AppLayout(
-      CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            elevation: 0,
-            backgroundColor: AppColors.primary,
-            collapsedHeight: AppSizes.getHeight(context) * 0.18,
-            bottom: PreferredSize(
-                preferredSize:
-                    Size.fromHeight(60.0), // Set the height of the title
-                child: Padding(
-                    padding: EdgeInsets.only(
-                        left: 16.0,
-                        bottom: 16.0), // Set the position of the title
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Transactions',
-                            style: TextStyle(
-                              color: AppColors.textBox,
-                              fontSize: 24.0,
-                              fontWeight: FontWeight.bold,
-                            )),
-                        SizedBox(height: AppSizes.extraSmall),
-                        SizedBox(
-                          width: AppSizes.getWitdth(context) * 0.9,
-                          child: AppInput(
-                              "Search", TextInputType.text, searchText),
-                        ),
-                        SizedBox(height: AppSizes.extraSmall),
-                        ChipsChoice<String>.multiple(
-                          value: tags,
-                          onChanged: (val) => setState(() => tags = val),
-                          choiceStyle: C2ChipStyle.filled(
-                            selectedStyle: C2ChipStyle(
-                              backgroundColor: AppColors.textBox,
-                            ),
-                          ),
-                          choiceItems: C2Choice.listFrom<String, String>(
-                            source: options,
-                            value: (i, v) => v,
-                            label: (i, v) => v,
-                          ),
-                        ),
-                      ],
-                    ))),
-            automaticallyImplyLeading: false,
-            expandedHeight: AppSizes.getHeight(context) * 0.4,
-            flexibleSpace: LayoutBuilder(
-                builder: (BuildContext context, BoxConstraints constraints) {
-              final double opacity =
-                  (((constraints.biggest.height * 0.2) / constraints.maxHeight))
-                      .clamp(0.0, 1.0);
-              return Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [AppColors.primary, AppColors.secondary],
-                  ),
-                ),
-                child: Opacity(
-                    opacity: 0.1,
-                    child: Image.asset(
-                      'assets/transactions.png',
-                      fit: BoxFit.scaleDown,
-                    )),
-              );
-            }),
-            floating: true,
-            pinned: true,
-            snap: false,
-          ),
+      Padding(
+          padding: EdgeInsets.symmetric(
+              horizontal: AppSizes.mediumSmall, vertical: AppSizes.small),
+          child: SingleChildScrollView(
+              child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text('Transactions',
+                  style: TextStyle(
+                    color: AppColors.textColor,
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.bold,
+                  )),
+              SizedBox(height: AppSizes.extraSmall),
+              SizedBox(
+                width: AppSizes.getWitdth(context) * 0.9,
+                child: AppInput("Search price, transaction ID, or date booked",
+                    TextInputType.text, searchText),
+              ),
 
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return Container(
-                    decoration: BoxDecoration(
-                        color: AppColors.container,
-                        borderRadius: BorderRadius.circular(AppSizes.small)),
-                    margin: EdgeInsets.symmetric(
-                        vertical: AppSizes.extraSmall,
-                        horizontal: AppSizes.mediumSmall),
-                    padding: EdgeInsets.all(AppSizes.small),
-                    child: TransactionListItem());
-              },
-              childCount: 15,
-            ),
-          ),
-          // Add other sliver widgets here, such as SliverList or SliverGrid
-        ],
-      ),
-      safeTop: false,
+              // ChipsChoice<String>.multiple(
+              //   value: tags,
+              //   onChanged: (val) {
+              //     print(val.toString());
+              //     setState(() => tags = val);
+              //   },
+              //   choiceStyle: C2ChipStyle.filled(
+              //     selectedStyle: C2ChipStyle(
+              //       backgroundColor: AppColors.textBox,
+              //     ),
+              //   ),
+              //   choiceItems: C2Choice.listFrom<String, String>(
+              //     source: options,
+              //     value: (i, v) => v,
+              //     label: (i, v) => v,
+              //   ),
+              // ),
+
+              Obx(() => StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('orders')
+                        .where(
+                          "customerID",
+                          isEqualTo: userInfo.user.uid.value,
+                        )
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      try {
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+
+                        // If there's data available, display it in a ListView
+                        var documents = snapshot.data!.docs;
+                        return ConstrainedBox(
+                            constraints: BoxConstraints(
+                                maxHeight: AppSizes.getHeight(context) * 0.8,
+                                maxWidth: AppSizes.getWitdth(context) * 0.9),
+                            child: ListView.separated(
+                              itemCount: documents.length,
+                              separatorBuilder: (context, index) =>
+                                  SizedBox(height: AppSizes.small),
+                              itemBuilder: (context, index) {
+                                var docdata = documents[index].data();
+                                return (tags.contains(docdata['status']) ||
+                                                tags.isEmpty) &&
+                                            (docdata['totalPrice']
+                                                    .toString()
+                                                    .contains(
+                                                        searchText.text) ||
+                                                docdata['uid']
+                                                    .toString()
+                                                    .contains(
+                                                        searchText.text)) ||
+                                        docdata['dateBooked']
+                                            .toString()
+                                            .contains(searchText.text)
+                                    ? TransactionListItem(
+                                        date: docdata['dateBooked'],
+                                        price: docdata['totalPrice'],
+                                        status: docdata['status'],
+                                        transactionID: docdata['uid'],
+                                        orders:
+                                            docdata['order'] as List<dynamic>,
+                                        time: docdata['timeBooked'],
+                                        customerID: docdata['customerID'],
+                                        businessID: docdata['businessID'],
+                                        totalPrice: docdata['totalPrice'],
+                                      )
+                                    : Container();
+                              },
+                            ));
+                      } catch (e) {
+                        print('Error in StreamBuilder: $e');
+                      }
+                      return Text('Error');
+                    },
+                  )),
+
+              // Add other sliver widgets here, such as SliverList or SliverGrid
+            ],
+          ))),
     );
   }
 }

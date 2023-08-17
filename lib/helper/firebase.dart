@@ -29,8 +29,16 @@ class FirebaseManager {
 
   final storage = FirebaseStorage.instance;
   final db = FirebaseFirestore.instance;
+  Future<void> logAction(String action, String user) async {
+    await FirebaseFirestore.instance.collection("logs").add({
+      "action": action,
+      "user": user,
+      "datePerformed": Timestamp.now(),
+    });
+  }
+
   Future<String> registerUser(
-      Customer user, String? password, File image) async {
+      Customer user, String? password, File? image) async {
     log(user.email.toString());
     log(user.firstName.toString());
     log(user.lastName.toString());
@@ -46,7 +54,9 @@ class FirebaseManager {
             password: password!,
           );
           await credential.user!.sendEmailVerification();
-          String imageURL = await uploadImage(image, credential.user!.uid);
+          String imageURL = image != null
+              ? await uploadImage(image, credential.user!.uid)
+              : '';
           final customerRef =
               db.collection('customer').doc(credential.user!.uid);
           customerRef.set({
@@ -56,6 +66,7 @@ class FirebaseManager {
             "email": user.email,
             "image": imageURL,
           });
+          logAction("User created", credential.user!.uid);
           return 'success';
         } on FirebaseAuthException catch (e) {
           if (e.code == 'weak-password') {
@@ -92,6 +103,7 @@ class FirebaseManager {
     businessRef
         .update(data)
         .onError((e, stackTrace) => {log(("Error writing document: $e"))});
+    logAction("Updated Location", _userStateController.user.uid.value);
     return 'Success';
   }
 
@@ -111,9 +123,11 @@ class FirebaseManager {
         try {
           final credential = await FirebaseAuth.instance
               .signInWithEmailAndPassword(email: email, password: password);
+
           if (credential.user!.emailVerified) {
             _userStateController.setUserData(
                 credential.user!.email!, credential.user!.uid);
+            logAction("Logged in", _userStateController.user.uid.value);
             return 'success';
           } else {
             log(credential.user!.emailVerified.toString());

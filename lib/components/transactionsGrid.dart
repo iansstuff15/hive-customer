@@ -32,7 +32,7 @@ class TransactionGrid extends StatelessWidget {
               height: AppSizes.small,
             ),
             itemBuilder: (BuildContext context, int index) {
-              return TransactionListItem();
+              return Placeholder();
             },
           ),
         ),

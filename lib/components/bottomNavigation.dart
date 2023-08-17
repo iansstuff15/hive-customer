@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:hive_customer/components/navigationButton.dart';
+import 'package:hive_customer/screens/explore.dart';
 import 'package:hive_customer/screens/home.dart';
 import 'package:hive_customer/screens/profile.dart';
 
@@ -40,18 +41,18 @@ class AppBottomNavigation extends StatelessWidget {
                     ),
                     () => Get.offNamed(Home.id)),
                 NavigationButton(
-                    'Transactions',
+                    'Explore',
                     Icon(
                       Icons.explore_outlined,
                       size: AppSizes.medium,
                       color: AppColors.textColor,
                     ),
-                    () => Get.offNamed(Transactions.id)),
+                    () => Get.offNamed(Explore.id)),
                 NavigationButton(
                     'Transactions',
                     SvgPicture.asset(
                       'assets/transactions.svg',
-                      width: AppSizes.medium,
+                      width: AppSizes.mediumLarge,
                       height: AppSizes.medium,
                     ),
                     () => Get.offNamed(Transactions.id)),

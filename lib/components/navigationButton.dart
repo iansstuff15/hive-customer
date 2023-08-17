@@ -27,7 +27,8 @@ class _NavigationButtonState extends State<NavigationButton> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Container(
-              padding: EdgeInsets.all(AppSizes.extraSmall),
+              padding: EdgeInsets.symmetric(
+                  vertical: AppSizes.extraSmall, horizontal: AppSizes.small),
               margin: EdgeInsets.all(AppSizes.extraSmall),
               decoration: BoxDecoration(
                   color: route == widget.label!.toLowerCase()

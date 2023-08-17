@@ -3,7 +3,10 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 
 import 'package:hive_customer/screens/appPages.dart';
+import 'package:hive_customer/screens/businessInfo.dart';
+import 'package:hive_customer/screens/categoryPage.dart';
 import 'package:hive_customer/screens/editBusinessHours.dart';
+import 'package:hive_customer/screens/explore.dart';
 import 'package:hive_customer/screens/forgotPassword.dart';
 import 'package:hive_customer/screens/home.dart';
 import 'package:hive_customer/screens/login.dart';
@@ -11,6 +14,8 @@ import 'package:hive_customer/screens/profile.dart';
 import 'package:hive_customer/screens/register.dart';
 
 import 'package:hive_customer/screens/register.dart';
+import 'package:hive_customer/screens/reviewScreen.dart';
+import 'package:hive_customer/screens/search.dart';
 import 'package:hive_customer/screens/transactionPage.dart';
 import 'package:hive_customer/screens/transactions.dart';
 import 'package:hive_customer/screens/updateContactInfo.dart';
@@ -52,6 +57,11 @@ class MyApp extends StatelessWidget {
         EditBusinessHours.id: (context) => EditBusinessHours(),
         UpdateContactPage.id: (context) => UpdateContactPage(),
         UpdateFeaturedImagePage.id: (context) => UpdateFeaturedImagePage(),
+        BusinessInfo.id: (context) => BusinessInfo(),
+        CategoryPage.id: (context) => CategoryPage(),
+        AppSearch.id: (context) => AppSearch(),
+        Explore.id: (context) => Explore(),
+        Review.id: (context) => Review()
       },
       initialRoute: Login.id,
     );

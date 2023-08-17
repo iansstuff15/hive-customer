@@ -31,11 +31,13 @@ class _AppLayoutState extends State<AppLayout> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.shopping_cart_outlined),
-      ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+      // floatingActionButton: Get.currentRoute != 'transactions'
+      //     ? FloatingActionButton(
+      //         onPressed: () {},
+      //         child: Icon(Icons.shopping_cart_outlined),
+      //       )
+      //     : null,
       bottomNavigationBar: AppBottomNavigation(),
       body: SafeArea(top: widget.safeTop!, child: widget.body!),
     );

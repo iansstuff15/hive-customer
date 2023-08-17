@@ -12,6 +12,7 @@ import 'package:hive_customer/components/contactInfo.dart';
 import 'package:hive_customer/components/editUserInfo.dart';
 import 'package:hive_customer/components/logoutConfirm.dart';
 import 'package:hive_customer/components/storeHours.dart';
+import 'package:hive_customer/statemanagement/user/userController.dart';
 import 'package:hive_customer/utilities/colors.dart';
 
 import '../utilities/sizes.dart';
@@ -19,6 +20,7 @@ import '../utilities/sizes.dart';
 class Profile extends StatelessWidget {
   const Profile({super.key});
   static String id = 'profile';
+
   @override
   Widget build(BuildContext context) {
     return AppLayout(SingleChildScrollView(
@@ -53,18 +55,6 @@ class Profile extends StatelessWidget {
         SizedBox(
           height: AppSizes.tweenSmall,
         ),
-        SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ContactInfo(),
-              StoreHours(),
-              FeaturedImage(),
-              AppRating(),
-            ],
-          ),
-        )
       ],
     )));
   }
