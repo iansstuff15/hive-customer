@@ -106,15 +106,17 @@ class _BusinessListItemState extends State<BusinessListItem> {
                                               .toLowerCase()))
                                   ? ListTile(
                                       title: Text(
-                                        data['businessName'],
+                                        data['businessName'] ?? "No data found",
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                      subtitle: Text(data['description']),
+                                      subtitle: Text(data['description'] ??
+                                          "No data found"),
                                       leading: ClipRRect(
                                         child: Image.network(
-                                          data['profilePicture'],
+                                          data['profilePicture'] ??
+                                              "https://t3.ftcdn.net/jpg/02/48/42/64/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg",
                                           width: 50,
                                           height: 50,
                                           fit: BoxFit.cover,

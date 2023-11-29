@@ -11,6 +11,7 @@ import 'package:hive_customer/statemanagement/user/userController.dart';
 import 'package:hive_customer/utilities/colors.dart';
 import 'package:hive_customer/utilities/sizes.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
+import 'package:intl/intl.dart';
 
 class Offer {
   final int id;
@@ -35,6 +36,49 @@ class BookService extends StatefulWidget {
 class _BookServiceState extends State<BookService> {
   DateTime? selectedDate;
   TimeOfDay? selectedTime;
+  List<dynamic> _selectedOffers = [];
+  bool buttonState = true;
+  bool _isDateSelectable(DateTime date) {
+    // Your logic to determine if the date is selectable
+    // For example, disable past dates:
+    return date.isAfter(DateTime.now());
+  }
+
+  DateTime selectedDates = DateTime.now();
+  List<DateTime> unselectableDates = [
+    DateTime(2023, 11, 10),
+    DateTime(2023, 11, 16),
+    DateTime(2023, 11, 20),
+  ];
+  bool isDateSelectable(DateTime date) {
+    // Return true if the date is selectable, otherwise false
+    if (unselectableDates.contains(date)) {
+      return false; // Date is not selectable
+    }
+
+    return true; // Date is selectable
+  }
+
+  String _formatDate(DateTime date) {
+    // Use the intl package for date formatting
+    return DateFormat('MM-dd-yyyy').format(date);
+  }
+
+  void checkState() {
+    print("button state ${selectedDate != null && selectedTime != null}");
+    if (_selectedOffers.length > 0 &&
+        selectedDate != null &&
+        selectedTime != null) {
+      setState(() {
+        buttonState = false;
+      });
+    } else {
+      setState(() {
+        buttonState = true;
+      });
+    }
+  }
+
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? pickedDateTime = await showDatePicker(
       context: context,
@@ -44,9 +88,34 @@ class _BookServiceState extends State<BookService> {
     );
 
     if (pickedDateTime != null) {
-      setState(() {
-        selectedDate = pickedDateTime;
-      });
+      print("docID ${widget.docID}");
+      print("pickedDate: ${pickedDateTime}");
+      print("formatted ${_formatDate(pickedDateTime)}");
+      var reference = FirebaseManager()
+          .db
+          .collection("orders")
+          .where("businessID", isEqualTo: widget.docID!)
+          .where("status", isEqualTo: "Pending")
+          .where("dateBooked", isEqualTo: _formatDate(pickedDateTime));
+      QuerySnapshot<Map<String, dynamic>> querysnapshot = await reference.get();
+      if (querysnapshot.docs.length == 0) {
+        setState(() {
+          selectedDate = pickedDateTime;
+        });
+        checkState();
+      } else {
+        ElegantNotification(
+                icon: Icon(
+                  Icons.error_rounded,
+                  color: Colors.red,
+                ),
+                showProgressIndicator: false,
+                displayCloseButton: false,
+                title: Text("Error"),
+                description: Text("Opps someone already booked that date"))
+            .show(context);
+        print("");
+      }
     }
   }
 
@@ -60,6 +129,7 @@ class _BookServiceState extends State<BookService> {
       setState(() {
         selectedTime = pickedTime;
       });
+      checkState();
     }
   }
 
@@ -69,7 +139,6 @@ class _BookServiceState extends State<BookService> {
 
     DateTime date = DateTime.now();
 
-    List<dynamic> _selectedOffers = [];
     UserStateController userInfo = Get.find<UserStateController>();
     return SingleChildScrollView(
       child: Padding(
@@ -159,13 +228,14 @@ class _BookServiceState extends State<BookService> {
                         title: Text("Busines Offers"),
                         items: _items,
                         onConfirm: (values) {
-                          // setState(() {
                           //   _selectedOffers = values;
                           // });
                           // print(_selectedOffers);
                           log(values.toString());
-                          _selectedOffers = values;
-                          log(_selectedOffers.toString());
+
+                          if (values != null) {
+                            _selectedOffers = values;
+                          }
                         },
                         chipDisplay: MultiSelectChipDisplay(
                           onTap: (value) {
@@ -178,6 +248,7 @@ class _BookServiceState extends State<BookService> {
                     } catch (e) {
                       print('Error in StreamBuilder: $e');
                     }
+
                     return Text('Error');
                   },
                 ),

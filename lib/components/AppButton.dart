@@ -13,11 +13,13 @@ class AppButton extends StatefulWidget {
   Color? background;
   Color? foreground;
   String? icon;
+  bool? disabled;
   AppButton(this.text, this.onPressed,
       {this.width = 150,
       this.height = 36,
       this.textWeight = FontWeight.bold,
       this.textSize = 16,
+      this.disabled = false,
       this.background,
       this.foreground,
       this.icon});
@@ -32,10 +34,11 @@ class _AppButtonState extends State<AppButton> {
       width: widget.width,
       height: widget.height,
       child: ElevatedButton(
-          onPressed: widget.onPressed,
+          onPressed: widget.disabled! ? () => {} : widget.onPressed,
           style: ButtonStyle(
               elevation: MaterialStateProperty.all(0),
-              backgroundColor: MaterialStateProperty.all(widget.background)),
+              backgroundColor: MaterialStateProperty.all(
+                  widget.disabled! ? Colors.grey : widget.background)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
